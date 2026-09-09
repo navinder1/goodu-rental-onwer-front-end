@@ -36,15 +36,28 @@ export class MyProperties implements OnInit {
     this.loading = true;
     this.errorMessage = '';
 
-    this.http.get<any>(`${this.apiUrl}/my?page=${this.page}&size=${this.size}`).subscribe({
+    // Build pageable params correctly for Spring - page is 0-indexed
+    const params = new URLSearchParams({
+      page: this.page.toString(),
+      size: this.size.toString()
+    });
+
+    this.http.get<any>(`${this.apiUrl}/my?${params.toString()}`).subscribe({
 
       next: (response) => {
-        this.properties = response?.data?.content || [];
-        this.totalPages = response?.data?.totalPages || 0;
+        console.log('Properties response:', response); // DEBUG
+        
+        // Try multiple paths to handle different response structures
+        const pageData = response?.data || response;
+        this.properties = pageData?.content || pageData || [];
+        this.totalPages = pageData?.totalPages || 0;
+        
+        console.log('Parsed properties:', this.properties, 'Total pages:', this.totalPages); // DEBUG
         this.loading = false;
       },
 
       error: (error) => {
+        console.error('Error loading properties:', error); // DEBUG
         this.errorMessage = getBackendMessage(error, 'Unable to load your properties.');
         this.loading = false;
       }
