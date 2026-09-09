@@ -1,0 +1,42 @@
+<div class="page-container">
+
+  <h1>Dashboard</h1>
+  <p class="page-subtitle">A quick look at your properties and activity.</p>
+
+  @if (loading) { <p class="status-text">Loading...</p> }
+  @if (errorMessage) { <p class="status-text error">{{ errorMessage }}</p> }
+
+  <div class="stat-cards">
+
+    <div class="stat-card" (click)="goTo('/properties')">
+      <div class="stat-value">{{ propertyCount }}</div>
+      <div class="stat-label">My Properties</div>
+    </div>
+
+    <div class="stat-card" (click)="goTo('/visits')">
+      <div class="stat-value">{{ pendingVisitCount }}</div>
+      <div class="stat-label">Pending Visit Requests</div>
+    </div>
+
+    <div class="stat-card" (click)="goTo('/applications')">
+      <div class="stat-value">{{ pendingApplicationCount }}</div>
+      <div class="stat-label">Pending Applications</div>
+    </div>
+
+    <div class="stat-card" (click)="goTo('/contact-requests')">
+      <div class="stat-value">{{ contactRequestCount }}</div>
+      <div class="stat-label">Contact Requests</div>
+    </div>
+
+    <div class="stat-card" (click)="goTo('/notifications')">
+      <div class="stat-value">{{ unreadNotifications }}</div>
+      <div class="stat-label">Unread Notifications</div>
+    </div>
+
+  </div>
+
+  <div class="quick-actions">
+    <button (click)="goTo('/properties/new')">+ List a New Property</button>
+  </div>
+
+</div>

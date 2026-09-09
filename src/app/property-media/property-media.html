@@ -1,0 +1,44 @@
+<div class="page-container">
+
+  <a routerLink="/properties" class="back-link">&larr; Back to My Properties</a>
+
+  <h1>Manage Media</h1>
+  <p class="page-subtitle">Add photo or video URLs for this property. Only one can be marked primary.</p>
+
+  @if (errorMessage) { <p class="status-text error">{{ errorMessage }}</p> }
+  @if (successMessage) { <p class="status-text success">{{ successMessage }}</p> }
+
+  <form class="form-box" (ngSubmit)="addMedia()">
+    <label>Media URL</label>
+    <input type="text" [(ngModel)]="mediaUrl" name="mediaUrl" placeholder="https://..." />
+
+    <label>Type</label>
+    <select [(ngModel)]="mediaType" name="mediaType">
+      <option value="IMAGE">Image</option>
+      <option value="VIDEO">Video</option>
+    </select>
+
+    <label><input type="checkbox" [(ngModel)]="isPrimary" name="isPrimary" /> Set as primary</label>
+
+    <button type="submit">Add Media</button>
+  </form>
+
+  @if (loading) { <p class="status-text">Loading...</p> }
+  @if (!loading && media.length === 0) { <p class="status-text">No media added yet.</p> }
+
+  <div class="card-grid">
+    @for (item of media; track item.id) {
+      <div class="list-card media-card">
+        @if (item.mediaType === 'IMAGE') {
+          <img [src]="item.mediaUrl" alt="Property media" />
+        } @else {
+          <div class="video-placeholder">🎬 Video</div>
+        }
+        <p class="url-text">{{ item.mediaUrl }}</p>
+        @if (item.isPrimary) { <span class="status-pill verified">Primary</span> }
+        <button class="danger" (click)="deleteMedia(item.id)">Delete</button>
+      </div>
+    }
+  </div>
+
+</div>

@@ -1,0 +1,29 @@
+<div class="page-container">
+
+  <h1>Notifications</h1>
+
+  @if (loading) { <p class="status-text">Loading...</p> }
+  @if (errorMessage) { <p class="status-text error">{{ errorMessage }}</p> }
+  @if (!loading && notifications.length === 0) { <p class="status-text">No notifications yet.</p> }
+
+  <div class="notif-list">
+    @for (n of notifications; track n.id) {
+      <div class="notif-item" [class.unread]="!n.isRead" (click)="markAsRead(n)">
+        @if (!n.isRead) { <span class="unread-dot"></span> }
+        <div>
+          <p>{{ n.message }}</p>
+          <small>{{ n.createdAt | date:'medium' }}</small>
+        </div>
+      </div>
+    }
+  </div>
+
+  @if (totalPages > 1) {
+    <div class="pagination">
+      <button (click)="previousPage()" [disabled]="page === 0">Previous</button>
+      <span>Page {{ page + 1 }} of {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="page >= totalPages - 1">Next</button>
+    </div>
+  }
+
+</div>

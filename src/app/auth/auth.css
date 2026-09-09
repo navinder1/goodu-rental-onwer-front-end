@@ -1,0 +1,1606 @@
+
+/* ============================================================
+   GUDU — PREMIUM AUTH UI
+   Clean • Modern • Apple-inspired • Property App
+   ============================================================ */
+
+:host {
+  --gudu-black: #111318;
+  --gudu-black-soft: #171b21;
+  --gudu-green: #16a34a;
+  --gudu-green-dark: #15803d;
+
+  --gudu-white: #ffffff;
+  --gudu-bg: #f8faf9;
+
+  --gudu-text: #111318;
+  --gudu-text-secondary: #59616d;
+  --gudu-muted: #8b929c;
+
+  --gudu-border: #e5e7eb;
+  --gudu-input: #f6f7f8;
+
+  --gudu-radius-card: 28px;
+  --gudu-radius-input: 14px;
+  --gudu-radius-button: 14px;
+
+  --gudu-ease:
+    cubic-bezier(0.22, 1, 0.36, 1);
+
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Display",
+    "SF Pro Text",
+    system-ui,
+    sans-serif;
+
+  display: block;
+}
+
+
+/* ============================================================
+   RESET
+   ============================================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+
+/* ============================================================
+   PAGE
+   ============================================================ */
+
+.auth-container {
+  position: relative;
+
+  min-height: 100dvh;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 15% 10%,
+      rgba(22, 163, 74, 0.07),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 85% 90%,
+      rgba(17, 19, 24, 0.055),
+      transparent 32%
+    ),
+    var(--gudu-bg);
+
+  isolation: isolate;
+
+  animation:
+    pageEnter
+    700ms
+    var(--gudu-ease)
+    both;
+}
+
+
+/* ============================================================
+   AMBIENT ORBS
+   ============================================================ */
+
+.ambient {
+  position: absolute;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  z-index: -1;
+
+  filter: blur(2px);
+}
+
+
+/* Green orb */
+
+.ambient-one {
+  width: 280px;
+  height: 280px;
+
+  top: -150px;
+  left: -130px;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(22, 163, 74, 0.12),
+      transparent 70%
+    );
+
+  animation:
+    ambientFloatOne
+    10s
+    ease-in-out
+    infinite alternate;
+}
+
+
+/* Black orb */
+
+.ambient-two {
+  width: 340px;
+  height: 340px;
+
+  right: -180px;
+  bottom: -190px;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(17, 19, 24, 0.075),
+      transparent 70%
+    );
+
+  animation:
+    ambientFloatTwo
+    13s
+    ease-in-out
+    infinite alternate;
+}
+
+
+/* Small green glow */
+
+.ambient-three {
+  width: 100px;
+  height: 100px;
+
+  top: 30%;
+  right: 12%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(22, 163, 74, 0.07),
+      transparent 70%
+    );
+
+  animation:
+    ambientPulse
+    6s
+    ease-in-out
+    infinite;
+}
+
+
+/* ============================================================
+   CARD
+   ============================================================ */
+
+.login-card {
+  position: relative;
+
+  width: 100%;
+  max-width: 430px;
+
+  padding: 42px 36px 30px;
+
+  background:
+    rgba(255, 255, 255, 0.96);
+
+  border:
+    1px solid rgba(229, 231, 235, 0.85);
+
+  border-radius:
+    var(--gudu-radius-card);
+
+  box-shadow:
+    0 5px 20px rgba(17, 19, 24, 0.045),
+    0 25px 70px rgba(17, 19, 24, 0.055);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  overflow: hidden;
+
+  animation:
+    cardEnter
+    800ms
+    100ms
+    var(--gudu-ease)
+    both;
+
+  transition:
+    transform 400ms var(--gudu-ease),
+    box-shadow 400ms var(--gudu-ease);
+}
+
+
+@media (hover: hover) {
+
+  .login-card:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+      0 8px 30px rgba(17, 19, 24, 0.055),
+      0 30px 80px rgba(17, 19, 24, 0.075);
+  }
+
+}
+
+
+/* ============================================================
+   CARD TOP LIGHT
+   ============================================================ */
+
+.login-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 8%;
+
+  width: 84%;
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 1),
+      transparent
+    );
+}
+
+
+/* ============================================================
+   BRAND
+   ============================================================ */
+
+.brand {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 38px;
+
+  animation:
+    fadeSlideUp
+    600ms
+    250ms
+    var(--gudu-ease)
+    both;
+}
+
+
+/* ============================================================
+   BRAND MARK
+   ============================================================ */
+
+.brand-mark {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 11px;
+
+  color: #ffffff;
+
+  font-size: 19px;
+  font-weight: 800;
+
+  letter-spacing: -0.04em;
+
+  background:
+    linear-gradient(
+      145deg,
+      #252b33,
+      #11151a
+    );
+
+  box-shadow:
+    0 5px 12px rgba(17, 19, 24, 0.16);
+
+  animation:
+    logoPop
+    650ms
+    300ms
+    var(--gudu-ease)
+    both;
+}
+
+
+/* ============================================================
+   BRAND NAME
+   ============================================================ */
+
+.brand-name {
+  color: var(--gudu-black);
+
+  font-size: 18px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+}
+
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+
+.auth-header {
+  margin-bottom: 30px;
+
+  animation:
+    fadeSlideUp
+    650ms
+    400ms
+    var(--gudu-ease)
+    both;
+}
+
+
+/* ============================================================
+   TITLE
+   ============================================================ */
+
+.auth-header h1 {
+  margin: 0 0 8px;
+
+  color: var(--gudu-text);
+
+  font-size: 30px;
+
+  line-height: 1.15;
+
+  font-weight: 750;
+
+  letter-spacing: -0.035em;
+}
+
+
+/* ============================================================
+   SUBTITLE
+   ============================================================ */
+
+.subtitle {
+  margin: 0;
+
+  color: var(--gudu-muted);
+
+  font-size: 14px;
+
+  line-height: 1.5;
+
+  font-weight: 400;
+}
+
+
+/* ============================================================
+   FORM
+   ============================================================ */
+
+form {
+  animation:
+    formEnter
+    700ms
+    500ms
+    var(--gudu-ease)
+    both;
+}
+
+
+/* ============================================================
+   FORM GROUP
+   ============================================================ */
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+
+/* ============================================================
+   LABEL
+   ============================================================ */
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: var(--gudu-text);
+
+  font-size: 13px;
+
+  line-height: 1.3;
+
+  font-weight: 600;
+
+  transition:
+    color 200ms ease,
+    transform 200ms var(--gudu-ease);
+}
+
+
+.form-group:focus-within label {
+  color: var(--gudu-green-dark);
+
+  transform: translateX(2px);
+}
+
+
+/* ============================================================
+   PASSWORD LABEL
+   ============================================================ */
+
+.password-label {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.password-label label {
+  margin-bottom: 8px;
+}
+
+
+/* ============================================================
+   FORGOT PASSWORD
+   ============================================================ */
+
+.forgot-link {
+  margin-bottom: 8px;
+
+  color: var(--gudu-text-secondary);
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  text-decoration: none;
+
+  transition:
+    color 180ms ease;
+}
+
+
+.forgot-link:hover {
+  color: var(--gudu-green-dark);
+}
+
+
+/* ============================================================
+   INPUT WRAPPER
+   ============================================================ */
+
+.input-wrapper {
+  position: relative;
+
+  width: 100%;
+}
+
+
+/* ============================================================
+   INPUT ICON
+   ============================================================ */
+
+.input-icon {
+  position: absolute;
+
+  top: 50%;
+  left: 15px;
+
+  width: 18px;
+  height: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transform:
+    translateY(-50%);
+
+  color: #8c939c;
+
+  pointer-events: none;
+
+  z-index: 2;
+
+  transition:
+    color 220ms ease,
+    transform 220ms var(--gudu-ease);
+}
+
+
+.input-icon svg {
+  width: 18px;
+  height: 18px;
+
+  fill: none;
+
+  stroke: currentColor;
+
+  stroke-width: 1.7;
+
+  stroke-linecap: round;
+
+  stroke-linejoin: round;
+}
+
+
+/* ============================================================
+   INPUT
+   ============================================================ */
+
+.form-group input {
+  width: 100%;
+
+  height: 52px;
+
+  padding:
+    14px
+    16px
+    14px
+    46px;
+
+  color: var(--gudu-text);
+
+  background:
+    var(--gudu-input);
+
+  border:
+    1px solid var(--gudu-border);
+
+  border-radius:
+    var(--gudu-radius-input);
+
+  outline: none;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  font-weight: 400;
+
+  transition:
+    background 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    transform 220ms var(--gudu-ease);
+}
+
+
+/* ============================================================
+   PLACEHOLDER
+   ============================================================ */
+
+.form-group input::placeholder {
+  color: #a0a6ae;
+
+  transition:
+    opacity 180ms ease,
+    transform 220ms var(--gudu-ease);
+}
+
+
+/* ============================================================
+   INPUT HOVER
+   ============================================================ */
+
+.form-group input:hover {
+  border-color: #d2d6db;
+
+  background: #f8f9fa;
+}
+
+
+/* ============================================================
+   INPUT FOCUS
+   ============================================================ */
+
+.form-group input:focus {
+  background: #ffffff;
+
+  border-color:
+    rgba(22, 163, 74, 0.65);
+
+  box-shadow:
+    0 0 0 3px rgba(22, 163, 74, 0.08),
+    0 5px 16px rgba(17, 19, 24, 0.035);
+
+  transform:
+    translateY(-1px);
+}
+
+
+.form-group:focus-within .input-icon {
+  color: var(--gudu-green);
+
+  transform:
+    translateY(-50%)
+    scale(1.05);
+}
+
+
+.form-group input:focus::placeholder {
+  opacity: 0.35;
+
+  transform:
+    translateX(4px);
+}
+
+
+/* ============================================================
+   VALID
+   ============================================================ */
+
+.form-group input:valid:not(:placeholder-shown) {
+  border-color:
+    rgba(22, 163, 74, 0.25);
+}
+
+
+/* ============================================================
+   INVALID
+   ============================================================ */
+
+.form-group input:invalid:not(:placeholder-shown) {
+  border-color:
+    rgba(220, 38, 38, 0.55);
+
+  animation:
+    inputShake
+    280ms
+    ease;
+}
+
+
+/* ============================================================
+   LOGIN BUTTON
+   ============================================================ */
+
+.login-button {
+  position: relative;
+
+  width: 100%;
+
+  height: 52px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  margin-top: 8px;
+
+  overflow: hidden;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #20252d,
+      #11151a
+    );
+
+  border: none;
+
+  border-radius:
+    var(--gudu-radius-button);
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  font-weight: 650;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 7px 18px rgba(17, 19, 24, 0.14);
+
+  transition:
+    transform 250ms var(--gudu-ease),
+    box-shadow 250ms var(--gudu-ease),
+    background 250ms ease;
+
+  animation:
+    buttonEnter
+    650ms
+    650ms
+    var(--gudu-ease)
+    both;
+}
+
+
+/* ============================================================
+   BUTTON SHINE
+   ============================================================ */
+
+.login-button::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: -120%;
+
+  width: 80%;
+  height: 100%;
+
+  background:
+    linear-gradient(
+      110deg,
+      transparent,
+      rgba(255, 255, 255, 0.04),
+      rgba(255, 255, 255, 0.16),
+      rgba(255, 255, 255, 0.04),
+      transparent
+    );
+
+  transform: skewX(-20deg);
+
+  transition:
+    left 650ms ease;
+}
+
+
+.login-button:hover::before {
+  left: 130%;
+}
+
+
+/* ============================================================
+   BUTTON HOVER
+   ============================================================ */
+
+.login-button:hover {
+  transform:
+    translateY(-2px);
+
+  background:
+    linear-gradient(
+      135deg,
+      #282e37,
+      #101419
+    );
+
+  box-shadow:
+    0 10px 25px rgba(17, 19, 24, 0.20);
+}
+
+
+/* ============================================================
+   BUTTON ACTIVE
+   ============================================================ */
+
+.login-button:active {
+  transform:
+    translateY(0)
+    scale(0.975);
+
+  box-shadow:
+    0 4px 10px rgba(17, 19, 24, 0.14);
+
+  transition-duration: 80ms;
+}
+
+
+/* ============================================================
+   BUTTON ARROW
+   ============================================================ */
+
+.button-arrow {
+  width: 17px;
+  height: 17px;
+
+  fill: none;
+
+  stroke: currentColor;
+
+  stroke-width: 1.8;
+
+  stroke-linecap: round;
+
+  stroke-linejoin: round;
+
+  transition:
+    transform 250ms var(--gudu-ease);
+}
+
+
+.login-button:hover .button-arrow {
+  transform:
+    translateX(4px);
+}
+
+
+/* ============================================================
+   REGISTER SECTION
+   ============================================================ */
+
+.register-section {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 5px;
+
+  margin-top: 25px;
+
+  color: var(--gudu-text-secondary);
+
+  font-size: 13px;
+
+  animation:
+    fadeSlideUp
+    600ms
+    800ms
+    var(--gudu-ease)
+    both;
+}
+
+
+/* ============================================================
+   REGISTER LINK
+   ============================================================ */
+
+.register-section a {
+  position: relative;
+
+  color: var(--gudu-black);
+
+  font-weight: 650;
+
+  text-decoration: none;
+
+  transition:
+    color 180ms ease;
+}
+
+
+.register-section a::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  bottom: -3px;
+
+  width: 100%;
+  height: 1px;
+
+  background:
+    var(--gudu-green);
+
+  transform:
+    scaleX(0);
+
+  transform-origin: right;
+
+  transition:
+    transform 250ms var(--gudu-ease);
+}
+
+
+.register-section a:hover {
+  color:
+    var(--gudu-green-dark);
+}
+
+
+.register-section a:hover::after {
+  transform:
+    scaleX(1);
+
+  transform-origin: left;
+}
+
+
+/* ============================================================
+   SECURITY NOTE
+   ============================================================ */
+
+.secure-note {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  margin-top: 22px;
+  padding-top: 20px;
+
+  border-top:
+    1px solid #f0f1f2;
+
+  color: #9aa0a8;
+
+  font-size: 11px;
+
+  animation:
+    fadeSlideUp
+    600ms
+    900ms
+    var(--gudu-ease)
+    both;
+}
+
+
+/* ============================================================
+   SECURITY ICON
+   ============================================================ */
+
+.secure-note svg {
+  width: 14px;
+  height: 14px;
+
+  fill: none;
+
+  stroke:
+    var(--gudu-green);
+
+  stroke-width: 1.7;
+
+  stroke-linecap: round;
+
+  stroke-linejoin: round;
+}
+
+
+/* ============================================================
+   PAGE ANIMATION
+   ============================================================ */
+
+@keyframes pageEnter {
+
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+
+}
+
+
+/* ============================================================
+   CARD ANIMATION
+   ============================================================ */
+
+@keyframes cardEnter {
+
+  0% {
+    opacity: 0;
+
+    transform:
+      translateY(35px)
+      scale(0.965);
+  }
+
+  60% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+}
+
+
+/* ============================================================
+   FADE SLIDE
+   ============================================================ */
+
+@keyframes fadeSlideUp {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+
+}
+
+
+/* ============================================================
+   FORM
+   ============================================================ */
+
+@keyframes formEnter {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+
+}
+
+
+/* ============================================================
+   BUTTON
+   ============================================================ */
+
+@keyframes buttonEnter {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(12px)
+      scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+}
+
+
+/* ============================================================
+   LOGO POP
+   ============================================================ */
+
+@keyframes logoPop {
+
+  0% {
+    opacity: 0;
+
+    transform:
+      scale(0.7)
+      rotate(-8deg);
+  }
+
+  65% {
+    transform:
+      scale(1.05)
+      rotate(1deg);
+  }
+
+  100% {
+    opacity: 1;
+
+    transform:
+      scale(1)
+      rotate(0);
+  }
+
+}
+
+
+/* ============================================================
+   AMBIENT ONE
+   ============================================================ */
+
+@keyframes ambientFloatOne {
+
+  from {
+    transform:
+      translate3d(0, 0, 0)
+      scale(1);
+  }
+
+  to {
+    transform:
+      translate3d(70px, 55px, 0)
+      scale(1.18);
+  }
+
+}
+
+
+/* ============================================================
+   AMBIENT TWO
+   ============================================================ */
+
+@keyframes ambientFloatTwo {
+
+  from {
+    transform:
+      translate3d(0, 0, 0)
+      scale(1);
+  }
+
+  to {
+    transform:
+      translate3d(-65px, -45px, 0)
+      scale(1.15);
+  }
+
+}
+
+
+/* ============================================================
+   AMBIENT PULSE
+   ============================================================ */
+
+@keyframes ambientPulse {
+
+  0%,
+  100% {
+    opacity: 0.4;
+
+    transform:
+      scale(1);
+  }
+
+  50% {
+    opacity: 0.9;
+
+    transform:
+      scale(1.25);
+  }
+
+}
+
+
+/* ============================================================
+   INPUT SHAKE
+   ============================================================ */
+
+@keyframes inputShake {
+
+  0% {
+    transform:
+      translateX(0);
+  }
+
+  25% {
+    transform:
+      translateX(-4px);
+  }
+
+  50% {
+    transform:
+      translateX(4px);
+  }
+
+  75% {
+    transform:
+      translateX(-2px);
+  }
+
+  100% {
+    transform:
+      translateX(0);
+  }
+
+}
+
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 480px) {
+
+  .auth-container {
+    padding: 16px;
+  }
+
+  .login-card {
+    max-width: 100%;
+
+    padding:
+      32px
+      22px
+      25px;
+
+    border-radius:
+      23px;
+  }
+
+  .brand {
+    margin-bottom: 32px;
+  }
+
+  .auth-header h1 {
+    font-size: 27px;
+  }
+
+}
+
+
+/* ============================================================
+   SMALL MOBILE
+   ============================================================ */
+
+@media (max-width: 360px) {
+
+  .auth-container {
+    padding: 12px;
+  }
+
+  .login-card {
+    padding:
+      28px
+      19px
+      22px;
+  }
+
+  .brand-mark {
+    width: 35px;
+    height: 35px;
+
+    font-size: 17px;
+  }
+
+  .brand-name {
+    font-size: 16px;
+  }
+
+  .auth-header h1 {
+    font-size: 24px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+  }
+
+  .form-group input {
+    height: 49px;
+  }
+
+  .login-button {
+    height: 49px;
+  }
+
+}
+
+
+/* ============================================================
+   DESKTOP
+   ============================================================ */
+
+@media (min-width: 768px) {
+
+  .auth-container {
+    padding: 48px;
+  }
+
+  .login-card {
+    max-width: 440px;
+
+    padding:
+      46px
+      40px
+      32px;
+  }
+
+}
+
+
+/* ============================================================
+   ACCESSIBILITY
+   ============================================================ */
+
+.login-button:focus-visible,
+.form-group input:focus-visible,
+a:focus-visible {
+  outline:
+    2px solid var(--gudu-green);
+
+  outline-offset:
+    3px;
+}
+
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration:
+      0.01ms !important;
+
+    animation-iteration-count:
+      1 !important;
+
+    transition-duration:
+      0.01ms !important;
+  }
+
+}
+
+
+/* ============================================================
+   SHORT SCREEN
+   ============================================================ */
+
+@media (max-height: 650px) {
+
+  .auth-container {
+    align-items: flex-start;
+
+    overflow-y: auto;
+
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+}
+
+
+
+
+/* ============================================================
+   ERROR MESSAGE
+   ============================================================ */
+
+.error-message {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 11px;
+
+  margin-bottom: 22px;
+
+  padding: 13px 14px;
+
+  color: #991b1b;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff7f7,
+      #fffafa
+    );
+
+  border:
+    1px solid #fecaca;
+
+  border-radius: 13px;
+
+  animation:
+    errorEnter
+    420ms
+    cubic-bezier(0.22, 1, 0.36, 1)
+    both;
+
+  box-shadow:
+    0 4px 14px rgba(220, 38, 38, 0.05);
+}
+
+
+/* Error icon */
+
+.error-icon {
+  width: 22px;
+  height: 22px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #dc2626;
+}
+
+
+.error-icon svg {
+  width: 20px;
+  height: 20px;
+
+  fill: none;
+
+  stroke: currentColor;
+
+  stroke-width: 1.8;
+
+  stroke-linecap: round;
+
+  stroke-linejoin: round;
+}
+
+
+/* Error content */
+
+.error-content {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 2px;
+
+  min-width: 0;
+}
+
+
+.error-content strong {
+  font-size: 12px;
+
+  font-weight: 700;
+
+  color: #991b1b;
+}
+
+
+.error-content span {
+  font-size: 12px;
+
+  line-height: 1.45;
+
+  color: #b42323;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* ============================================================
+   ERROR ANIMATION
+   ============================================================ */
+
+@keyframes errorEnter {
+
+  0% {
+    opacity: 0;
+
+    transform:
+      translateY(-8px)
+      scale(0.97);
+  }
+
+  60% {
+    opacity: 1;
+
+    transform:
+      translateY(2px)
+      scale(1.005);
+  }
+
+  100% {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+}
+
+
+/* ============================================================
+   LOADING SPINNER
+   ============================================================ */
+
+.spinner {
+  width: 16px;
+  height: 16px;
+
+  border:
+    2px solid rgba(255, 255, 255, 0.3);
+
+  border-top-color:
+    #ffffff;
+
+  border-radius: 50%;
+
+  animation:
+    loginSpinner
+    700ms
+    linear
+    infinite;
+}
+
+
+@keyframes loginSpinner {
+
+  to {
+    transform:
+      rotate(360deg);
+  }
+
+}
+
+
+/* ============================================================
+   DISABLED LOGIN BUTTON
+   ============================================================ */
+
+.login-button:disabled {
+  cursor: wait;
+
+  opacity: 0.75;
+
+  transform: none;
+
+  box-shadow:
+    0 5px 14px rgba(17, 19, 24, 0.08);
+}
+
+
+.login-button:disabled:hover {
+  transform: none;
+}
+
+
+/* ============================================================
+   MOBILE ERROR
+   ============================================================ */
+
+@media (max-width: 420px) {
+
+  .error-message {
+    padding:
+      12px;
+
+    margin-bottom:
+      19px;
+
+    border-radius:
+      12px;
+  }
+
+  .error-content span {
+    font-size:
+      11.5px;
+  }
+
+}
+
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .error-message,
+  .spinner {
+    animation: none;
+  }
+
+}
+

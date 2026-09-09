@@ -1,0 +1,351 @@
+
+<div class="auth-container">
+
+  <!-- Ambient background -->
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <div class="ambient ambient-three"></div>
+
+
+  <div class="register-card">
+
+    <!-- Brand -->
+    <div class="brand">
+
+      <div class="brand-mark">
+        G
+      </div>
+
+      <span class="brand-name">
+        GOODU
+      </span>
+
+    </div>
+
+
+    <!-- Header -->
+    <div class="auth-header">
+
+      <h1>
+        Create your account
+      </h1>
+
+      <p class="subtitle">
+        Join GUDU and find your perfect place
+      </p>
+
+    </div>
+
+
+    <!-- Error -->
+    @if (errorMessage) {
+
+      <div
+        class="error-message"
+        role="alert"
+      >
+
+        <div class="error-icon">
+
+          <svg viewBox="0 0 24 24">
+
+            <circle
+              cx="12"
+              cy="12"
+              r="9"
+            />
+
+            <path d="M12 8v5" />
+
+            <circle
+              cx="12"
+              cy="16.5"
+              r=".7"
+              fill="currentColor"
+              stroke="none"
+            />
+
+          </svg>
+
+        </div>
+
+        <div class="error-content">
+
+          <strong>
+            Registration failed
+          </strong>
+
+          <span>
+            {{ errorMessage }}
+          </span>
+
+        </div>
+
+      </div>
+
+    }
+
+
+    <!-- Form -->
+    <form
+      (ngSubmit)="register()"
+    >
+
+
+      <!-- NAME -->
+      <div class="form-group">
+
+        <label for="name">
+          Full name
+        </label>
+
+        <div class="input-wrapper">
+
+          <span class="input-icon">
+
+            <svg viewBox="0 0 24 24">
+
+              <circle
+                cx="12"
+                cy="8"
+                r="3.5"
+              />
+
+              <path
+                d="M5 20c.7-3.5 3.1-5.5 7-5.5s6.3 2 7 5.5"
+              />
+
+            </svg>
+
+          </span>
+
+          <input
+            type="text"
+            id="name"
+            name="name"
+            [(ngModel)]="name"
+            placeholder="Enter your full name"
+            autocomplete="name"
+            required
+          />
+
+        </div>
+
+      </div>
+
+
+      <!-- EMAIL -->
+      <div class="form-group">
+
+        <label for="email">
+          Email address
+        </label>
+
+        <div class="input-wrapper">
+
+          <span class="input-icon">
+
+            <svg viewBox="0 0 24 24">
+
+              <path
+                d="M4 6h16c1.1 0 2 .9 2 2v8c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V8c0-1.1.9-2 2-2Z"
+              />
+
+              <path
+                d="m3 7 9 6 9-6"
+              />
+
+            </svg>
+
+          </span>
+
+          <input
+            type="email"
+            id="email"
+            name="email"
+            [(ngModel)]="email"
+            placeholder="you@example.com"
+            autocomplete="email"
+            required
+          />
+
+        </div>
+
+      </div>
+
+
+      <!-- PHONE -->
+      <div class="form-group">
+
+        <label for="phone">
+          Phone number
+        </label>
+
+        <div class="input-wrapper">
+
+          <span class="input-icon">
+
+            <svg viewBox="0 0 24 24">
+
+              <path
+                d="M6.5 3h3l1.5 5-2 1.5c1 2.2 2.8 4 5 5l1.5-2 5 1.5v3c0 1.1-.9 2-2 2C10.5 19 5 13.5 5 6c0-1.7.7-3 1.5-3Z"
+              />
+
+            </svg>
+
+          </span>
+
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            [(ngModel)]="phone"
+            placeholder="Enter your phone number"
+            autocomplete="tel"
+            inputmode="tel"
+            required
+          />
+
+        </div>
+
+      </div>
+
+
+      <!-- PASSWORD -->
+      <div class="form-group">
+
+        <label for="password">
+          Password
+        </label>
+
+        <div class="input-wrapper">
+
+          <span class="input-icon">
+
+            <svg viewBox="0 0 24 24">
+
+              <rect
+                x="4"
+                y="10"
+                width="16"
+                height="11"
+                rx="2"
+              />
+
+              <path
+                d="M8 10V7a4 4 0 0 1 8 0v3"
+              />
+
+              <circle
+                cx="12"
+                cy="15.5"
+                r="1"
+              />
+
+            </svg>
+
+          </span>
+
+          <input
+            type="password"
+            id="password"
+            name="password"
+            [(ngModel)]="password"
+            placeholder="Create a strong password"
+            autocomplete="new-password"
+            required
+          />
+
+        </div>
+
+        <span class="password-hint">
+          Use at least 8 characters
+        </span>
+
+      </div>
+
+
+      <!-- ACCOUNT TYPE -->
+      <!-- This is the Owner app — every account created here is an OWNER account. -->
+      <input type="hidden" name="role" [(ngModel)]="role" value="OWNER" />
+
+
+      <!-- REGISTER BUTTON -->
+      <button
+        type="submit"
+        class="register-button"
+        [disabled]="isLoading"
+        [attr.aria-busy]="isLoading"
+      >
+
+        @if (isLoading) {
+
+          <span class="spinner"></span>
+
+          <span>
+            Creating account...
+          </span>
+
+        } @else {
+
+          <span>
+            Create account
+          </span>
+
+          <svg
+            class="button-arrow"
+            viewBox="0 0 24 24"
+          >
+
+            <path d="M5 12h14" />
+
+            <path d="m13 6 6 6-6 6" />
+
+          </svg>
+
+        }
+
+      </button>
+
+    </form>
+
+
+    <!-- Login -->
+    <div class="login-text">
+
+      <span>
+        Already have an account?
+      </span>
+
+      <a routerLink="/auth">
+        Login
+      </a>
+
+    </div>
+
+
+    <!-- Security -->
+    <div class="secure-note">
+
+      <svg viewBox="0 0 24 24">
+
+        <path
+          d="M12 3 5 6v5c0 4.5 2.9 8.5 7 10 4.1-1.5 7-5.5 7-10V6l-7-3Z"
+        />
+
+        <path
+          d="m9 12 2 2 4-4"
+        />
+
+      </svg>
+
+      <span>
+        Your information is secure
+      </span>
+
+    </div>
+
+  </div>
+
+</div>
+

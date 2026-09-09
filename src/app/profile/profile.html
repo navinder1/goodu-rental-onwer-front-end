@@ -1,0 +1,108 @@
+<div class="profile-container">
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="message">
+    Loading profile...
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="errorMessage" class="message error">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Success -->
+  <div *ngIf="successMessage" class="message success">
+    {{ successMessage }}
+  </div>
+
+  <!-- Profile -->
+  <div *ngIf="user && !loading" class="profile-card">
+
+    <div class="profile-header">
+
+      <img
+        [src]="user.profileImage || 'assets/default-profile.png'"
+        alt="Profile"
+        class="profile-image"
+      />
+
+      <div class="profile-info">
+        <h2>{{ user.name }}</h2>
+        <span class="role">{{ user.role }}</span>
+      </div>
+
+      <span
+        class="status"
+        [class.unverified]="!user.isVerified"
+      >
+        {{ user.isVerified ? '✓ Verified' : 'Not Verified' }}
+      </span>
+
+    </div>
+
+    <!-- VIEW MODE -->
+    <div class="profile-details" *ngIf="!editing">
+
+      <div>
+        <span>ID</span>
+        <strong>{{ user.id }}</strong>
+      </div>
+
+      <div>
+        <span>Name</span>
+        <strong>{{ user.name }}</strong>
+      </div>
+
+      <div>
+        <span>Email</span>
+        <strong>{{ user.email }}</strong>
+      </div>
+
+      <div>
+        <span>Phone</span>
+        <strong>{{ user.phone || 'Not provided' }}</strong>
+      </div>
+
+      <div>
+        <span>Role</span>
+        <strong>{{ user.role }}</strong>
+      </div>
+
+      <div>
+        <span>Account</span>
+        <strong>{{ user.isVerified ? 'Verified' : 'Not Verified' }}</strong>
+      </div>
+
+      <div>
+        <span>Joined</span>
+        <strong>{{ user.createdAt | date:'dd MMM yyyy' }}</strong>
+      </div>
+
+      <div class="profile-actions">
+        <button type="button" (click)="startEdit()">Edit Profile</button>
+        <button type="button" class="logout-btn" (click)="logout()">Logout</button>
+      </div>
+
+    </div>
+
+    <!-- EDIT MODE -->
+    <form class="profile-edit-form" *ngIf="editing" (ngSubmit)="saveProfile()">
+
+      <label>Name</label>
+      <input type="text" [(ngModel)]="editName" name="editName" required />
+
+      <label>Phone</label>
+      <input type="tel" [(ngModel)]="editPhone" name="editPhone" required />
+
+      <label>Profile Image URL (optional)</label>
+      <input type="text" [(ngModel)]="editProfileImage" name="editProfileImage" placeholder="https://..." />
+
+      <div class="profile-actions">
+        <button type="submit">Save Changes</button>
+        <button type="button" (click)="cancelEdit()">Cancel</button>
+      </div>
+
+    </form>
+
+  </div>
+</div>

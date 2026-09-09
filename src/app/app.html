@@ -1,0 +1,165 @@
+<div class="app">
+
+  <!-- ================= HEADER ================= -->
+
+  <header class="header">
+
+    <!-- LOGO -->
+    <div class="logo-container" [routerLink]="isLoggedIn ? '/dashboard' : '/auth'">
+      <img
+        src="/mydreamhouselogo.png"
+        alt="MyDreamHouse Owner"
+        width="155"
+        height="60"
+        class="logo"
+      >
+      <span class="app-label">for Owners</span>
+    </div>
+
+
+    <!-- ================= NAV LINKS (desktop) ================= -->
+
+    @if (isLoggedIn) {
+      <nav class="nav-links">
+        <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+        <a routerLink="/properties" routerLinkActive="active">My Properties</a>
+        <a routerLink="/visits" routerLinkActive="active">Visits</a>
+        <a routerLink="/applications" routerLinkActive="active">Applications</a>
+        <a routerLink="/contact-requests" routerLinkActive="active">Contact Requests</a>
+      </nav>
+    }
+
+
+    <!-- ================= RIGHT SIDE ================= -->
+
+    <div class="header-actions">
+
+      @if (isLoggedIn) {
+
+        <button
+          type="button"
+          class="add-property-btn"
+          routerLink="/properties/new"
+        >
+          + List Property
+        </button>
+
+        <!-- NOTIFICATIONS -->
+        <button
+          type="button"
+          class="notif-button"
+          routerLink="/notifications"
+          title="Notifications"
+        >
+          <span>🔔</span>
+          @if (unreadCount > 0) {
+            <span class="unread-badge">{{ unreadCount }}</span>
+          }
+        </button>
+
+      }
+
+
+      <!-- MENU -->
+      <div class="menu-wrapper">
+
+        <button
+          type="button"
+          class="menu-button"
+          (click)="toggleMenu()"
+          title="Menu"
+        >
+          ☰
+        </button>
+
+        @if (menuOpen) {
+
+          <div class="menu-dropdown">
+
+            @if (isLoggedIn) {
+
+              <a routerLink="/dashboard" (click)="closeMenu()">Dashboard</a>
+              <a routerLink="/properties" (click)="closeMenu()">My Properties</a>
+              <a routerLink="/visits" (click)="closeMenu()">Visits</a>
+              <a routerLink="/applications" (click)="closeMenu()">Applications</a>
+              <a routerLink="/contact-requests" (click)="closeMenu()">Contact Requests</a>
+              <a routerLink="/profile" (click)="closeMenu()">Profile</a>
+              <button type="button" class="menu-logout" (click)="logout()">Logout</button>
+
+            } @else {
+
+              <a routerLink="/auth" (click)="closeMenu()">Login</a>
+              <a routerLink="/register" (click)="closeMenu()">Register</a>
+
+            }
+
+          </div>
+
+        }
+
+      </div>
+
+
+      <!-- PROFILE -->
+      @if (isLoggedIn) {
+        <button
+          type="button"
+          class="profile-button"
+          routerLink="/profile"
+        >
+          <span class="profile-icon">👤</span>
+          <span>Profile</span>
+        </button>
+      }
+
+    </div>
+
+  </header>
+
+
+  <!-- ================= PAGE CONTENT ================= -->
+
+  <main class="application-content">
+
+    <router-outlet></router-outlet>
+
+  </main>
+
+
+  <!-- ================= MOBILE BOTTOM NAV ================= -->
+
+  @if (isLoggedIn) {
+    <nav class="mobile-nav">
+
+      <a routerLink="/dashboard" routerLinkActive="active">
+        <span class="mobile-icon">⌂</span>
+        <span>Dashboard</span>
+      </a>
+
+      <a routerLink="/properties" routerLinkActive="active">
+        <span class="mobile-icon">🏠</span>
+        <span>Properties</span>
+      </a>
+
+      <a routerLink="/visits" routerLinkActive="active">
+        <span class="mobile-icon">□</span>
+        <span>Visits</span>
+      </a>
+
+      <a routerLink="/notifications" routerLinkActive="active" class="mobile-notif-link">
+        <span class="mobile-icon">🔔</span>
+        <span>Alerts</span>
+        @if (unreadCount > 0) {
+          <span class="mobile-unread-dot"></span>
+        }
+      </a>
+
+      <a routerLink="/profile" routerLinkActive="active">
+        <span class="mobile-icon">○</span>
+        <span>Profile</span>
+      </a>
+
+    </nav>
+  }
+
+</div>

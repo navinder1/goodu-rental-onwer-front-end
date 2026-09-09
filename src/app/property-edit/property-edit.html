@@ -1,0 +1,109 @@
+<div class="page-container">
+
+  <a routerLink="/properties" class="back-link">&larr; Back to My Properties</a>
+
+  <h1>Edit Property</h1>
+
+  @if (loading) { <p class="status-text">Loading...</p> }
+  @if (errorMessage) { <p class="status-text error">{{ errorMessage }}</p> }
+
+  @if (!loading) {
+
+    <form class="edit-form" (ngSubmit)="saveChanges()">
+
+      <label>Title</label>
+      <input type="text" [(ngModel)]="title" name="title" required />
+
+      <label>Description</label>
+      <textarea [(ngModel)]="description" name="description" rows="4" required></textarea>
+
+      <div class="form-row">
+        <div>
+          <label>Property Type</label>
+          <select [(ngModel)]="propertyType" name="propertyType" required>
+            @for (type of propertyTypes; track type) {
+              <option [value]="type">{{ type }}</option>
+            }
+          </select>
+        </div>
+        <div>
+          <label>BHK</label>
+          <input type="number" [(ngModel)]="bhk" name="bhk" min="1" required />
+        </div>
+        <div>
+          <label>Area (sq.ft)</label>
+          <input type="number" [(ngModel)]="area" name="area" min="1" required />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label>Floor</label>
+          <input type="number" [(ngModel)]="floor" name="floor" />
+        </div>
+        <div>
+          <label>Total Floors</label>
+          <input type="number" [(ngModel)]="totalFloors" name="totalFloors" />
+        </div>
+      </div>
+
+      <label>Address</label>
+      <input type="text" [(ngModel)]="address" name="address" required />
+
+      <div class="form-row">
+        <div>
+          <label>City</label>
+          <input type="text" [(ngModel)]="city" name="city" required />
+        </div>
+        <div>
+          <label>State</label>
+          <input type="text" [(ngModel)]="state" name="state" required />
+        </div>
+        <div>
+          <label>Pincode</label>
+          <input type="text" [(ngModel)]="pincode" name="pincode" required />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label>Latitude (optional)</label>
+          <input type="number" [(ngModel)]="latitude" name="latitude" />
+        </div>
+        <div>
+          <label>Longitude (optional)</label>
+          <input type="number" [(ngModel)]="longitude" name="longitude" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label>Monthly Rent</label>
+          <input type="number" [(ngModel)]="monthlyRent" name="monthlyRent" min="0" required />
+        </div>
+        <div>
+          <label>Deposit</label>
+          <input type="number" [(ngModel)]="deposit" name="deposit" min="0" required />
+        </div>
+        <div>
+          <label>Available From</label>
+          <input type="date" [(ngModel)]="availableFrom" name="availableFrom" required />
+        </div>
+      </div>
+
+      <div class="checkbox-row">
+        <label><input type="checkbox" [(ngModel)]="parkingAvailable" name="parkingAvailable" /> Parking</label>
+        <label><input type="checkbox" [(ngModel)]="waterAvailable" name="waterAvailable" /> Water Supply</label>
+        <label><input type="checkbox" [(ngModel)]="electricityAvailable" name="electricityAvailable" /> Electricity Backup</label>
+      </div>
+
+      <label>Tenant Preference (optional)</label>
+      <input type="text" [(ngModel)]="tenantPreference" name="tenantPreference" placeholder="e.g. Family, Bachelors" />
+
+      <button type="submit" [disabled]="saving">{{ saving ? 'Saving...' : 'Save Changes' }}</button>
+
+    </form>
+
+  }
+
+</div>

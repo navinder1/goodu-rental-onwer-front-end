@@ -1,0 +1,29 @@
+<div class="page-container">
+
+  <h1>Contact Requests</h1>
+  <p class="page-subtitle">Tenants interested in your properties.</p>
+
+  @if (loading) { <p class="status-text">Loading...</p> }
+  @if (errorMessage) { <p class="status-text error">{{ errorMessage }}</p> }
+  @if (!loading && requests.length === 0) { <p class="status-text">No contact requests yet.</p> }
+
+  <div class="card-grid">
+    @for (req of requests; track req.id) {
+      <div class="list-card">
+        <h3>{{ req.propertyTitle }}</h3>
+        <p>From: {{ req.rentalName }}</p>
+        @if (req.message) { <p><em>"{{ req.message }}"</em></p> }
+        <span class="status-pill" [class]="req.status.toLowerCase()">{{ req.status }}</span>
+      </div>
+    }
+  </div>
+
+  @if (totalPages > 1) {
+    <div class="pagination">
+      <button (click)="previousPage()" [disabled]="page === 0">Previous</button>
+      <span>Page {{ page + 1 }} of {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="page >= totalPages - 1">Next</button>
+    </div>
+  }
+
+</div>

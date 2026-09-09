@@ -1,0 +1,684 @@
+<div class="page">
+
+  <!-- PAGE -->
+  <main class="container">
+
+    <!-- HEADER -->
+    <div class="page-header">
+
+      <a routerLink="/properties" class="back">
+        ← Back
+      </a>
+
+      <h1>List Your Property</h1>
+
+      <p>
+        Add your property details and find the right tenant.
+      </p>
+
+    </div>
+
+
+    <!-- FORM CARD -->
+    <div class="property-card">
+
+      @if (errorMessage) {
+        <p class="status-text error">{{ errorMessage }}</p>
+      }
+
+      <form (ngSubmit)="registerProperty()">
+
+
+        <!-- ================= BASIC INFORMATION ================= -->
+
+        <section class="form-section">
+
+          <div class="section-heading">
+
+            <span class="section-number">
+              01
+            </span>
+
+            <div>
+              <h2>Basic Information</h2>
+              <p>Tell us about your property</p>
+            </div>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              Property Title
+              <span>*</span>
+            </label>
+
+            <input
+              type="text"
+              name="title"
+              [(ngModel)]="title"
+              placeholder="Example: 2 BHK Apartment for Rent"
+              required
+            />
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              Description
+              <span>*</span>
+            </label>
+
+            <textarea
+              name="description"
+              [(ngModel)]="description"
+              placeholder="Describe your property, nearby facilities, locality, etc."
+              rows="5"
+              required
+            ></textarea>
+
+          </div>
+
+
+          <div class="form-row">
+
+            <div class="form-group">
+
+              <label>
+                Property Type
+                <span>*</span>
+              </label>
+
+              <select
+                name="propertyType"
+                [(ngModel)]="propertyType"
+                required
+              >
+
+                <option value="" disabled>
+                  Select property type
+                </option>
+
+                @for (type of propertyTypes; track type) {
+
+                  <option [value]="type">
+                    {{ type }}
+                  </option>
+
+                }
+
+              </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                BHK
+                <span>*</span>
+              </label>
+
+              <input
+                type="number"
+                name="bhk"
+                [(ngModel)]="bhk"
+                min="1"
+                placeholder="2"
+                required
+              />
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+
+        <!-- ================= PROPERTY DETAILS ================= -->
+
+        <section class="form-section">
+
+          <div class="section-heading">
+
+            <span class="section-number">
+              02
+            </span>
+
+            <div>
+              <h2>Property Details</h2>
+              <p>Provide basic measurements</p>
+            </div>
+
+          </div>
+
+
+          <div class="form-row three">
+
+            <div class="form-group">
+
+              <label>
+                Area
+                <span>*</span>
+              </label>
+
+              <div class="input-with-unit">
+
+                <input
+                  type="number"
+                  name="area"
+                  [(ngModel)]="area"
+                  min="1"
+                  placeholder="1200"
+                  required
+                />
+
+                <span>sq.ft</span>
+
+              </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                Floor
+              </label>
+
+              <input
+                type="number"
+                name="floor"
+                [(ngModel)]="floor"
+                min="0"
+                placeholder="2"
+              />
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                Total Floors
+              </label>
+
+              <input
+                type="number"
+                name="totalFloors"
+                [(ngModel)]="totalFloors"
+                min="1"
+                placeholder="5"
+              />
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+
+        <!-- ================= LOCATION ================= -->
+
+        <section class="form-section">
+
+          <div class="section-heading">
+
+            <span class="section-number">
+              03
+            </span>
+
+            <div>
+              <h2>Location</h2>
+              <p>Where is your property located?</p>
+            </div>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              Address
+              <span>*</span>
+            </label>
+
+            <input
+              type="text"
+              name="address"
+              [(ngModel)]="address"
+              placeholder="House No, Street, Area"
+              required
+            />
+
+          </div>
+
+
+          <div class="form-row three">
+
+            <div class="form-group">
+
+              <label>
+                City
+                <span>*</span>
+              </label>
+
+              <input
+                type="text"
+                name="city"
+                [(ngModel)]="city"
+                placeholder="Hyderabad"
+                required
+              />
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                State
+                <span>*</span>
+              </label>
+
+              <input
+                type="text"
+                name="state"
+                [(ngModel)]="state"
+                placeholder="Telangana"
+                required
+              />
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                Pincode
+                <span>*</span>
+              </label>
+
+              <input
+                type="text"
+                name="pincode"
+                [(ngModel)]="pincode"
+                placeholder="500001"
+                maxlength="10"
+                required
+              />
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+
+        <!-- ================= MAP LOCATION ================= -->
+
+        <section class="form-section">
+
+          <div class="section-heading">
+
+            <span class="section-number">
+              04
+            </span>
+
+            <div>
+              <h2>Map Location</h2>
+              <p>Help tenants find your property easily</p>
+            </div>
+
+          </div>
+
+
+          <div class="coordinates-box">
+
+            <div class="coordinate-icon">
+              📍
+            </div>
+
+            <div>
+              <strong>Property coordinates</strong>
+
+              <p>
+                Enter the latitude and longitude of your property.
+              </p>
+            </div>
+
+          </div>
+
+
+          <div class="form-row">
+
+            <div class="form-group">
+
+              <label>
+                Latitude
+              </label>
+
+              <input
+                type="number"
+                step="any"
+                name="latitude"
+                [(ngModel)]="latitude"
+                placeholder="17.3850"
+              />
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                Longitude
+              </label>
+
+              <input
+                type="number"
+                step="any"
+                name="longitude"
+                [(ngModel)]="longitude"
+                placeholder="78.4867"
+              />
+
+            </div>
+
+          </div>
+
+
+          <div class="map-placeholder">
+
+            <div class="map-icon">
+              📍
+            </div>
+
+            <strong>
+              Property Map
+            </strong>
+
+            <span>
+              Map preview will appear here
+            </span>
+
+          </div>
+
+        </section>
+
+
+
+        <!-- ================= RENT DETAILS ================= -->
+
+        <section class="form-section">
+
+          <div class="section-heading">
+
+            <span class="section-number">
+              05
+            </span>
+
+            <div>
+              <h2>Rent Details</h2>
+              <p>Set your rental price and availability</p>
+            </div>
+
+          </div>
+
+
+          <div class="form-row three">
+
+            <div class="form-group">
+
+              <label>
+                Monthly Rent
+                <span>*</span>
+              </label>
+
+              <div class="input-with-prefix">
+
+                <span>₹</span>
+
+                <input
+                  type="number"
+                  name="monthlyRent"
+                  [(ngModel)]="monthlyRent"
+                  min="0"
+                  placeholder="15000"
+                  required
+                />
+
+              </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                Security Deposit
+                <span>*</span>
+              </label>
+
+              <div class="input-with-prefix">
+
+                <span>₹</span>
+
+                <input
+                  type="number"
+                  name="deposit"
+                  [(ngModel)]="deposit"
+                  min="0"
+                  placeholder="50000"
+                  required
+                />
+
+              </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                Available From
+                <span>*</span>
+              </label>
+
+              <input
+                type="date"
+                name="availableFrom"
+                [(ngModel)]="availableFrom"
+                required
+              />
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+
+        <!-- ================= FACILITIES ================= -->
+
+        <section class="form-section">
+
+          <div class="section-heading">
+
+            <span class="section-number">
+              06
+            </span>
+
+            <div>
+              <h2>Facilities</h2>
+              <p>Select facilities available at your property</p>
+            </div>
+
+          </div>
+
+
+          <div class="facilities">
+
+            <label class="facility">
+
+              <input
+                type="checkbox"
+                name="parkingAvailable"
+                [(ngModel)]="parkingAvailable"
+              />
+
+              <span class="check-box">
+                ✓
+              </span>
+
+              <span class="facility-text">
+                <strong>Parking</strong>
+                <small>Parking available</small>
+              </span>
+
+            </label>
+
+
+            <label class="facility">
+
+              <input
+                type="checkbox"
+                name="waterAvailable"
+                [(ngModel)]="waterAvailable"
+              />
+
+              <span class="check-box">
+                ✓
+              </span>
+
+              <span class="facility-text">
+                <strong>Water</strong>
+                <small>Water supply available</small>
+              </span>
+
+            </label>
+
+
+            <label class="facility">
+
+              <input
+                type="checkbox"
+                name="electricityAvailable"
+                [(ngModel)]="electricityAvailable"
+              />
+
+              <span class="check-box">
+                ✓
+              </span>
+
+              <span class="facility-text">
+                <strong>Electricity</strong>
+                <small>Electricity available</small>
+              </span>
+
+            </label>
+
+          </div>
+
+        </section>
+
+
+
+        <!-- ================= TENANT PREFERENCE ================= -->
+
+        <section class="form-section">
+
+          <div class="section-heading">
+
+            <span class="section-number">
+              07
+            </span>
+
+            <div>
+              <h2>Tenant Preference</h2>
+              <p>Who can rent your property?</p>
+            </div>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              Preferred Tenant
+            </label>
+
+            <select
+              name="tenantPreference"
+              [(ngModel)]="tenantPreference"
+            >
+
+              <option value="">
+                No Preference
+              </option>
+
+              <option value="FAMILY">
+                Family
+              </option>
+
+              <option value="BACHELORS">
+                Bachelors
+              </option>
+
+              <option value="STUDENTS">
+                Students
+              </option>
+
+              <option value="WORKING_PROFESSIONALS">
+                Working Professionals
+              </option>
+
+            </select>
+
+          </div>
+
+        </section>
+
+
+
+        <!-- ================= SUBMIT ================= -->
+
+        <div class="submit-area">
+
+          <div class="submit-info">
+
+            <strong>
+              Ready to list your property?
+            </strong>
+
+            <span>
+              Review your details before submitting.
+            </span>
+
+          </div>
+
+
+          <button
+            type="submit"
+            class="submit-btn"
+          >
+            List Property
+            <span>→</span>
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </main>
+
+</div>

@@ -1,0 +1,43 @@
+<div class="page-container">
+
+  <div class="header-row">
+    <h1>My Properties</h1>
+    <button class="primary-btn" (click)="addNew()">+ Add Property</button>
+  </div>
+
+  @if (loading) { <p class="status-text">Loading...</p> }
+  @if (errorMessage) { <p class="status-text error">{{ errorMessage }}</p> }
+  @if (successMessage) { <p class="status-text success">{{ successMessage }}</p> }
+  @if (!loading && properties.length === 0) { <p class="status-text">You haven't listed any properties yet.</p> }
+
+  <div class="card-grid">
+    @for (property of properties; track property.id) {
+      <div class="list-card">
+        <h3>{{ property.title }}</h3>
+        <p>{{ property.city }}, {{ property.state }}</p>
+        <p>{{ property.bhk }} BHK &middot; {{ property.propertyType }}</p>
+        <p class="rent">&#8377;{{ property.monthlyRent | number }} / month</p>
+        <span class="status-pill" [class]="property.status.toLowerCase()">{{ property.status }}</span>
+
+        <div class="action-row">
+          <button (click)="editProperty(property.id)">Edit</button>
+          <button (click)="manageMedia(property.id)">Media</button>
+          <button (click)="manageAvailability(property.id)">Availability</button>
+          @if (property.status !== 'RENTED') {
+            <button (click)="markAsRented(property.id)">Mark Rented</button>
+          }
+          <button class="danger" (click)="deleteProperty(property.id)">Delete</button>
+        </div>
+      </div>
+    }
+  </div>
+
+  @if (totalPages > 1) {
+    <div class="pagination">
+      <button (click)="previousPage()" [disabled]="page === 0">Previous</button>
+      <span>Page {{ page + 1 }} of {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="page >= totalPages - 1">Next</button>
+    </div>
+  }
+
+</div>

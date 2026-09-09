@@ -1,0 +1,38 @@
+<div class="page-container">
+
+  <h1>Rental Applications</h1>
+  <p class="page-subtitle">Applications submitted by tenants for your properties.</p>
+
+  @if (loading) { <p class="status-text">Loading...</p> }
+  @if (errorMessage) { <p class="status-text error">{{ errorMessage }}</p> }
+  @if (successMessage) { <p class="status-text success">{{ successMessage }}</p> }
+  @if (!loading && applications.length === 0) { <p class="status-text">No applications received yet.</p> }
+
+  <div class="card-grid">
+    @for (app of applications; track app.id) {
+      <div class="list-card">
+        <h3>{{ app.propertyTitle }}</h3>
+        <p>Applicant: {{ app.rentalName }}</p>
+        <p>Move-in: {{ app.moveInDate }}</p>
+        @if (app.message) { <p><em>"{{ app.message }}"</em></p> }
+        <span class="status-pill" [class]="app.status.toLowerCase()">{{ app.status }}</span>
+
+        @if (canDecide(app)) {
+          <div class="action-row">
+            <button class="primary" (click)="accept(app.id)">Accept</button>
+            <button class="danger" (click)="reject(app.id)">Reject</button>
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  @if (totalPages > 1) {
+    <div class="pagination">
+      <button (click)="previousPage()" [disabled]="page === 0">Previous</button>
+      <span>Page {{ page + 1 }} of {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="page >= totalPages - 1">Next</button>
+    </div>
+  }
+
+</div>

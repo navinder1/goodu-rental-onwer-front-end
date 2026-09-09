@@ -1,0 +1,44 @@
+<div class="page-container">
+
+  <h1>Visit Requests</h1>
+
+  @if (loading) { <p class="status-text">Loading...</p> }
+  @if (errorMessage) { <p class="status-text error">{{ errorMessage }}</p> }
+  @if (successMessage) { <p class="status-text success">{{ successMessage }}</p> }
+  @if (!loading && visits.length === 0) { <p class="status-text">No visit requests yet.</p> }
+
+  <div class="card-grid">
+    @for (visit of visits; track visit.id) {
+      <div class="list-card">
+        <h3>{{ visit.propertyTitle }}</h3>
+        <p>Requested by: {{ visit.rentalName }}</p>
+        <p>{{ visit.visitDate }} &middot; {{ visit.startTime }} - {{ visit.endTime }}</p>
+        @if (visit.visitorMessage) { <p><em>"{{ visit.visitorMessage }}"</em></p> }
+        <span class="status-pill" [class]="visit.status.toLowerCase()">{{ visit.status }}</span>
+
+        @if (visit.status === 'REQUESTED') {
+          <input type="text" [(ngModel)]="replyMessages[visit.id]" placeholder="Optional reply message" class="reply-input" />
+          <div class="action-row">
+            <button class="primary" (click)="confirm(visit.id)">Confirm</button>
+            <button class="danger" (click)="reject(visit.id)">Reject</button>
+          </div>
+        }
+
+        @if (visit.status === 'CONFIRMED') {
+          <div class="action-row">
+            <button (click)="complete(visit.id)">Mark Completed</button>
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  @if (totalPages > 1) {
+    <div class="pagination">
+      <button (click)="previousPage()" [disabled]="page === 0">Previous</button>
+      <span>Page {{ page + 1 }} of {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="page >= totalPages - 1">Next</button>
+    </div>
+  }
+
+</div>

@@ -1,0 +1,44 @@
+<div class="page-container">
+
+  <a routerLink="/properties" class="back-link">&larr; Back to My Properties</a>
+
+  <h1>Visit Availability</h1>
+  <p class="page-subtitle">Set the weekly time slots when tenants can request to visit this property.</p>
+
+  @if (errorMessage) { <p class="status-text error">{{ errorMessage }}</p> }
+  @if (successMessage) { <p class="status-text success">{{ successMessage }}</p> }
+
+  <form class="form-box" (ngSubmit)="addSlot()">
+    <label>Day of Week</label>
+    <select [(ngModel)]="dayOfWeek" name="dayOfWeek">
+      @for (day of daysOfWeek; track day) {
+        <option [value]="day">{{ day }}</option>
+      }
+    </select>
+
+    <label>Start Time</label>
+    <input type="time" [(ngModel)]="startTime" name="startTime" />
+
+    <label>End Time</label>
+    <input type="time" [(ngModel)]="endTime" name="endTime" />
+
+    <label><input type="checkbox" [(ngModel)]="isAvailable" name="isAvailable" /> Available</label>
+
+    <button type="submit">Add Slot</button>
+  </form>
+
+  @if (loading) { <p class="status-text">Loading...</p> }
+  @if (!loading && slots.length === 0) { <p class="status-text">No availability slots set yet.</p> }
+
+  <div class="card-grid">
+    @for (slot of slots; track slot.id) {
+      <div class="list-card">
+        <h3>{{ slot.dayOfWeek }}</h3>
+        <p>{{ slot.startTime }} - {{ slot.endTime }}</p>
+        <span class="status-pill" [class.active]="slot.isAvailable">{{ slot.isAvailable ? 'Available' : 'Unavailable' }}</span>
+        <button class="danger" (click)="deleteSlot(slot.id)">Delete</button>
+      </div>
+    }
+  </div>
+
+</div>
