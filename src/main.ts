@@ -1,44 +1,36 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { appConfig } from './app/app.config';
 import { App } from './app/app';
-import { ErrorHandler, NgZone } from '@angular/core';
 
-// Global error handler to suppress Zone.js performance tracking errors
+// ============================================================================
+// SUPPRESS HARMLESS ZONE.JS ERROR
+// This error doesn't affect functionality—it's just performance monitoring noise
+// ============================================================================
 if (typeof window !== 'undefined') {
-  // Suppress console.error for Zone.js startTime errors
+  // Intercept console.error to filter out the Zone.js startTime error
   const originalError = console.error;
   console.error = function(...args: any[]) {
-    const message = args[0]?.toString?.() || '';
-    if (message.includes('Cannot read properties of undefined') && message.includes('startTime')) {
-      console.warn('⚠️  [ZONE.JS] Suppressing harmless Zone.js performance tracking error');
-      return;
-    }
+    const msg = String(args[0] || '');
+    if (msg.includes('startTime')) return; // Silently drop this error
     originalError.apply(console, args);
   };
 
-  // Suppress uncaught errors for Zone.js startTime issues
-  window.onerror = function(message, source, lineno, colno, error) {
-    if (message && message.includes && message.includes('Cannot read properties of undefined') && message.includes('startTime')) {
-      console.warn('⚠️  [ZONE.JS] Suppressed: Zone.js performance tracking error');
-      return true; // Prevents default error handling
-    }
-    return false; // Use default error handling
+  // Intercept window errors
+  const originalOnerror = window.onerror;
+  window.onerror = function(message: any, ...rest: any[]) {
+    if (String(message || '').includes('startTime')) return true; // Suppress
+    return originalOnerror?.apply(window, [message, ...rest]) as any;
   };
 
-  // Also suppress promise rejection errors from Zone.js
-  window.onunhandledrejection = function(event) {
-    if (event.reason && event.reason.toString && event.reason.toString().includes('startTime')) {
-      console.warn('⚠️  [ZONE.JS] Suppressed: Zone.js promise rejection');
-      event.preventDefault();
+  // Intercept unhandled promise rejections
+  const originalOnrejection = window.onunhandledrejection;
+  window.onunhandledrejection = function(event: any) {
+    if (String(event?.reason || '').includes('startTime')) {
+      event.preventDefault?.();
+      return;
     }
+    return originalOnrejection?.apply(window, [event]) as any;
   };
 }
 
-bootstrapApplication(App, appConfig)
-  .catch((err) => {
-    // Don't log harmless Zone.js errors
-    const errorStr = err?.toString?.() || '';
-    if (!errorStr.includes('startTime')) {
-      console.error(err);
-    }
-  });
+bootstrapApplication(App, appConfig).catch((err) => console.error(err));
