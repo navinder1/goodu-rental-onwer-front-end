@@ -36,28 +36,40 @@ export class MyProperties implements OnInit {
     this.loading = true;
     this.errorMessage = '';
 
-    // Build pageable params correctly for Spring - page is 0-indexed
-    const params = new URLSearchParams({
+    // Build params for Spring's Pageable
+    const params = {
       page: this.page.toString(),
       size: this.size.toString()
-    });
+    };
 
-    this.http.get<any>(`${this.apiUrl}/my?${params.toString()}`).subscribe({
+    this.http.get<any>(`${this.apiUrl}/my`, { params }).subscribe({
 
       next: (response) => {
-        console.log('Properties response:', response); // DEBUG
+        console.log('Raw response:', response);
         
-        // Try multiple paths to handle different response structures
-        const pageData = response?.data || response;
-        this.properties = pageData?.content || pageData || [];
-        this.totalPages = pageData?.totalPages || 0;
+        // Handle ApiResponse<Page<PropertyResponse>> format
+        const data = response?.data;
         
-        console.log('Parsed properties:', this.properties, 'Total pages:', this.totalPages); // DEBUG
+        if (data && Array.isArray(data.content)) {
+          // Proper Spring Page format
+          this.properties = data.content;
+          this.totalPages = data.totalPages || 0;
+        } else if (Array.isArray(data)) {
+          // Direct array format
+          this.properties = data;
+          this.totalPages = 1;
+        } else {
+          console.warn('Unexpected response format:', data);
+          this.properties = [];
+          this.totalPages = 0;
+        }
+        
+        console.log('Loaded properties:', this.properties.length, 'Total pages:', this.totalPages);
         this.loading = false;
       },
 
       error: (error) => {
-        console.error('Error loading properties:', error); // DEBUG
+        console.error('Error loading properties:', error);
         this.errorMessage = getBackendMessage(error, 'Unable to load your properties.');
         this.loading = false;
       }
