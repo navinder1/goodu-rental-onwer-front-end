@@ -49,6 +49,8 @@ export class Auth {
 
     this.isLoading = true;
 
+    console.log('🔐 [AUTH] Attempting login with email:', this.email);
+
     this.http.post<any>(
       'http://localhost:8080/api/auth/login',
       loginData
@@ -56,7 +58,9 @@ export class Auth {
 
       next: (response) => {
 
-        console.log('Login successful:', response);
+        console.log('✅ [AUTH] Login successful:', response);
+        console.log('✅ [AUTH] Token received:', response?.data?.accessToken ? 'YES' : 'NO');
+        console.log('✅ [AUTH] Role:', response?.data?.user?.role);
 
         this.isLoading = false;
 
@@ -116,7 +120,9 @@ export class Auth {
 
       error: (error) => {
 
-        console.error('check your credintials..!:', error);
+        console.error('❌ [AUTH] Login error:', error);
+        console.error('❌ [AUTH] Error status:', error?.status);
+        console.error('❌ [AUTH] Error message:', error?.error?.message || error?.message);
 
         this.isLoading = false;
 

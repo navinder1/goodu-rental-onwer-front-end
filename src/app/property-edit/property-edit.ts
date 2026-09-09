@@ -65,11 +65,14 @@ export class PropertyEdit implements OnInit {
 
     this.loading = true;
 
+    console.log('📝 [PROPERTY-EDIT] Loading property', this.propertyId);
+
     this.http.get<any>(`${this.apiUrl}/${this.propertyId}`).subscribe({
 
       next: (response) => {
 
         const p = response.data;
+        console.log('✅ [PROPERTY-EDIT] Property loaded:', p.title);
 
         this.title = p.title;
         this.description = p.description;
@@ -96,6 +99,7 @@ export class PropertyEdit implements OnInit {
       },
 
       error: (error) => {
+        console.error('❌ [PROPERTY-EDIT] Error loading property:', error);
         this.errorMessage = getBackendMessage(error, 'Unable to load this property.');
         this.loading = false;
       }

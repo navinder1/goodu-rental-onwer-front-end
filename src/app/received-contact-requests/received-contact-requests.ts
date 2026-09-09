@@ -33,15 +33,19 @@ export class ReceivedContactRequests implements OnInit {
     this.loading = true;
     this.errorMessage = '';
 
+    console.log('📞 [CONTACT-REQUESTS] Loading contact requests... Page:', this.page);
+
     this.http.get<any>(`${this.apiUrl}/received?page=${this.page}&size=${this.size}`).subscribe({
 
       next: (response) => {
         this.requests = response?.data?.content || [];
         this.totalPages = response?.data?.totalPages || 0;
+        console.log('✅ [CONTACT-REQUESTS] Loaded', this.requests.length, 'contact requests');
         this.loading = false;
       },
 
       error: (error) => {
+        console.error('❌ [CONTACT-REQUESTS] Error loading contact requests:', error);
         this.errorMessage = getBackendMessage(error, 'Unable to load contact requests.');
         this.loading = false;
       }

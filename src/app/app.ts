@@ -36,16 +36,20 @@ export class App implements OnInit {
 
   loadUnreadCount(): void {
 
+    console.log('🔔 [APP] Loading unread notification count...');
+
     this.http.get<any>(
       'http://localhost:8080/api/notifications/unread-count'
     ).subscribe({
 
       next: (response) => {
         this.unreadCount = response?.data?.unreadCount || 0;
+        console.log('✅ [APP] Unread count updated:', this.unreadCount);
       },
 
       error: (error) => {
-        console.error('Failed to load unread count:', error);
+        console.error('❌ [APP] Failed to load unread count:', error);
+        console.error('❌ [APP] Error status:', error?.status);
       }
 
     });

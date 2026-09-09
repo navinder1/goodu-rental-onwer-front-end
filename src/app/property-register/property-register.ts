@@ -92,7 +92,8 @@ export class PropertyRegister {
       tenantPreference: this.tenantPreference
     };
 
-    console.log('Property Data:', propertyData);
+    console.log('📝 [PROPERTY-REGISTER] Registering property...');
+    console.log('🏠 [PROPERTY-REGISTER] Property data:', propertyData);
 
     this.errorMessage = '';
 

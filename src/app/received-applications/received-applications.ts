@@ -34,15 +34,19 @@ export class ReceivedApplications implements OnInit {
     this.loading = true;
     this.errorMessage = '';
 
+    console.log('📋 [APPLICATIONS] Loading received applications... Page:', this.page);
+
     this.http.get<any>(`${this.apiUrl}/received?page=${this.page}&size=${this.size}`).subscribe({
 
       next: (response) => {
         this.applications = response?.data?.content || [];
         this.totalPages = response?.data?.totalPages || 0;
+        console.log('✅ [APPLICATIONS] Loaded', this.applications.length, 'applications');
         this.loading = false;
       },
 
       error: (error) => {
+        console.error('❌ [APPLICATIONS] Error loading applications:', error);
         this.errorMessage = getBackendMessage(error, 'Unable to load applications.');
         this.loading = false;
       }
@@ -55,6 +59,8 @@ export class ReceivedApplications implements OnInit {
 
     this.successMessage = '';
     this.errorMessage = '';
+
+    console.log('✔️ [APPLICATIONS] Accepting application', applicationId);
 
     this.http.patch<any>(`${this.apiUrl}/${applicationId}/accept`, {}).subscribe({
 

@@ -36,6 +36,8 @@ export class Profile implements OnInit {
 
   getProfile(): void {
 
+    console.log('👤 [PROFILE] Loading user profile...');
+
     this.http.get<any>(this.apiUrl).subscribe({
 
       next: (response) => {
@@ -43,10 +45,12 @@ export class Profile implements OnInit {
         this.editName = this.user.name;
         this.editPhone = this.user.phone;
         this.editProfileImage = this.user.profileImage || '';
+        console.log('✅ [PROFILE] Profile loaded:', this.user.email);
         this.loading = false;
       },
 
       error: (error) => {
+        console.error('❌ [PROFILE] Error loading profile:', error);
         this.errorMessage = getBackendMessage(error, 'Failed to load profile');
         this.loading = false;
       }
@@ -71,6 +75,8 @@ export class Profile implements OnInit {
 
     this.errorMessage = '';
     this.successMessage = '';
+
+    console.log('💾 [PROFILE] Saving profile changes...');
 
     this.http.put<any>(this.apiUrl, {
       name: this.editName,

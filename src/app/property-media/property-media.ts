@@ -40,14 +40,18 @@ export class PropertyMedia implements OnInit {
 
     this.loading = true;
 
+    console.log('🖼️  [MEDIA] Loading media for property', this.propertyId);
+
     this.http.get<any>(this.apiUrl).subscribe({
 
       next: (response) => {
         this.media = response.data || [];
+        console.log('✅ [MEDIA] Loaded', this.media.length, 'media files');
         this.loading = false;
       },
 
       error: (error) => {
+        console.error('❌ [MEDIA] Error loading media:', error);
         this.errorMessage = getBackendMessage(error, 'Unable to load media.');
         this.loading = false;
       }
@@ -66,6 +70,8 @@ export class PropertyMedia implements OnInit {
     this.errorMessage = '';
     this.successMessage = '';
 
+    console.log('📤 [MEDIA] Adding media:', this.mediaType);
+
     this.http.post<any>(this.apiUrl, {
       mediaUrl: this.mediaUrl,
       mediaType: this.mediaType,
@@ -73,6 +79,7 @@ export class PropertyMedia implements OnInit {
     }).subscribe({
 
       next: () => {
+        console.log('✅ [MEDIA] Media added successfully');
         this.successMessage = 'Media added.';
         this.mediaUrl = '';
         this.isPrimary = false;

@@ -62,7 +62,8 @@ export class Register {
       role: this.role
     };
 
-    console.log('Registration Data:', regData);
+    console.log('📝 [REGISTER] Attempting registration with email:', this.email);
+    console.log('📝 [REGISTER] Registration data:', regData);
 
     this.isLoading = true;
 
@@ -80,7 +81,7 @@ export class Register {
         this.isLoading = false;
 
         console.log(
-          'Registration successful:',
+          '✅ [REGISTER] Registration successful:',
           response
         );
 
@@ -97,7 +98,9 @@ export class Register {
 
         this.isLoading = false;
 
-        console.error(
+        console.error('❌ [REGISTER] Registration error:', error);
+        console.error('❌ [REGISTER] Error status:', error?.status);
+        console.error('❌ [REGISTER] Error message:', error?.error?.message || error?.message);
           'Registration failed:',
           error
         );

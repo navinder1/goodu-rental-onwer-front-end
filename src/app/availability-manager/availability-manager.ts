@@ -43,14 +43,18 @@ export class AvailabilityManager implements OnInit {
 
     this.loading = true;
 
+    console.log('📅 [AVAILABILITY] Loading availability slots for property', this.propertyId);
+
     this.http.get<any>(this.apiUrl).subscribe({
 
       next: (response) => {
         this.slots = response.data || [];
+        console.log('✅ [AVAILABILITY] Loaded', this.slots.length, 'availability slots');
         this.loading = false;
       },
 
       error: (error) => {
+        console.error('❌ [AVAILABILITY] Error loading slots:', error);
         this.errorMessage = getBackendMessage(error, 'Unable to load availability.');
         this.loading = false;
       }
@@ -69,6 +73,8 @@ export class AvailabilityManager implements OnInit {
     this.errorMessage = '';
     this.successMessage = '';
 
+    console.log('📍 [AVAILABILITY] Adding slot:', this.dayOfWeek, this.startTime, '-', this.endTime);
+
     this.http.post<any>(this.apiUrl, {
       dayOfWeek: this.dayOfWeek,
       startTime: `${this.startTime}:00`,
@@ -76,7 +82,8 @@ export class AvailabilityManager implements OnInit {
       isAvailable: this.isAvailable
     }).subscribe({
 
-      next: () => {
+      next: () {
+        console.log('✅ [AVAILABILITY] Slot added successfully');
         this.successMessage = 'Availability slot added.';
         this.loadSlots();
       },

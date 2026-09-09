@@ -14,11 +14,14 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   }
 
   if (token) {
+    console.log('🔐 [AUTH-INTERCEPTOR] Attaching token to request:', req.url);
     req = req.clone({
       setHeaders: {
         Authorization: `Bearer ${token}`
       }
     });
+  } else {
+    console.warn('⚠️  [AUTH-INTERCEPTOR] No token found for request:', req.url);
   }
 
   return next(req);

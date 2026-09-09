@@ -99,6 +99,8 @@ export class MyProperties implements OnInit {
     this.successMessage = '';
     this.errorMessage = '';
 
+    console.log('🏠 [PROPERTIES] Marking property', id, 'as rented');
+
     this.http.patch<any>(`${this.apiUrl}/${id}/mark-rented`, {}).subscribe({
 
       next: () => {
@@ -122,6 +124,8 @@ export class MyProperties implements OnInit {
 
     this.successMessage = '';
     this.errorMessage = '';
+
+    console.log('🗑️  [PROPERTIES] Deleting property', id);
 
     this.http.delete<any>(`${this.apiUrl}/${id}`).subscribe({
 

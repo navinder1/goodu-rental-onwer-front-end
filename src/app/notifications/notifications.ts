@@ -33,15 +33,19 @@ export class Notifications implements OnInit {
     this.loading = true;
     this.errorMessage = '';
 
+    console.log('🔔 [NOTIFICATIONS] Loading notifications... Page:', this.page);
+
     this.http.get<any>(`${this.apiUrl}?page=${this.page}&size=${this.size}`).subscribe({
 
       next: (response) => {
         this.notifications = response?.data?.content || [];
         this.totalPages = response?.data?.totalPages || 0;
+        console.log('✅ [NOTIFICATIONS] Loaded', this.notifications.length, 'notifications');
         this.loading = false;
       },
 
       error: (error) => {
+        console.error('❌ [NOTIFICATIONS] Error loading notifications:', error);
         this.errorMessage = getBackendMessage(error, 'Unable to load notifications.');
         this.loading = false;
       }
@@ -54,14 +58,17 @@ export class Notifications implements OnInit {
 
     if (notification.isRead) return;
 
+    console.log('📬 [NOTIFICATIONS] Marking notification', notification.id, 'as read');
+
     this.http.patch<any>(`${this.apiUrl}/${notification.id}/read`, {}).subscribe({
 
       next: () => {
         notification.isRead = true;
+        console.log('✅ [NOTIFICATIONS] Notification', notification.id, 'marked as read');
       },
 
       error: (error) => {
-        console.error('Failed to mark as read:', getBackendMessage(error, ''));
+        console.error('❌ [NOTIFICATIONS] Failed to mark as read:', getBackendMessage(error, ''));
       }
 
     });

@@ -37,15 +37,19 @@ export class ReceivedVisits implements OnInit {
     this.loading = true;
     this.errorMessage = '';
 
+    console.log('👥 [VISITS] Loading received visits... Page:', this.page);
+
     this.http.get<any>(`${this.apiUrl}/received?page=${this.page}&size=${this.size}`).subscribe({
 
       next: (response) => {
         this.visits = response?.data?.content || [];
         this.totalPages = response?.data?.totalPages || 0;
+        console.log('✅ [VISITS] Loaded', this.visits.length, 'visits');
         this.loading = false;
       },
 
       error: (error) => {
+        console.error('❌ [VISITS] Error loading visits:', error);
         this.errorMessage = getBackendMessage(error, 'Unable to load visit requests.');
         this.loading = false;
       }
@@ -57,6 +61,7 @@ export class ReceivedVisits implements OnInit {
   confirm(visitId: number): void {
 
     const message = this.replyMessages[visitId] || '';
+    console.log('✅ [VISITS] Confirming visit', visitId);
 
     this.http.patch<any>(`${this.apiUrl}/${visitId}/confirm`, { message }).subscribe({
 
