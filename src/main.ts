@@ -17,9 +17,9 @@ if (typeof window !== 'undefined') {
 
   // Intercept window errors
   const originalOnerror = window.onerror;
-  window.onerror = function(message: any, ...rest: any[]) {
+  window.onerror = function(message: any, source?: any, lineno?: any, colno?: any, error?: any) {
     if (String(message || '').includes('startTime')) return true; // Suppress
-    return originalOnerror?.apply(window, [message, ...rest]) as any;
+    return originalOnerror?.call(window, message, source, lineno, colno, error) as any;
   };
 
   // Intercept unhandled promise rejections

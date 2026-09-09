@@ -82,7 +82,7 @@ export class AvailabilityManager implements OnInit {
       isAvailable: this.isAvailable
     }).subscribe({
 
-      next: () {
+      next: () => {
         console.log('✅ [AVAILABILITY] Slot added successfully');
         this.successMessage = 'Availability slot added.';
         this.loadSlots();

@@ -101,9 +101,6 @@ export class Register {
         console.error('❌ [REGISTER] Registration error:', error);
         console.error('❌ [REGISTER] Error status:', error?.status);
         console.error('❌ [REGISTER] Error message:', error?.error?.message || error?.message);
-          'Registration failed:',
-          error
-        );
 
 
         // Backend not reachable
